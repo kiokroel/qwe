@@ -1,4 +1,4 @@
-name: python_server
+name: python_serverddddd
 
 on:
   workflow_dispatch:
