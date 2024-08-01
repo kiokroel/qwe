@@ -5,11 +5,11 @@ from core.schemas.mixins.JsonTypeStrMixin import JsonTypeStrMixin
 from core.schemas.mixins.SystemMessageMixin import SystemMessagesMixin
 
 
-class RoomInitResponceData(BaseModel):
+class RoomInitResponseData(BaseModel):
     game_type: str = Field(alias="gameType")
     room_name: str = Field(alias="roomName")
     room_init_status: str = Field(alias="roomInitStatus")
 
 
-class RoomInitResponce(JsonTypeStrMixin, SystemMessagesMixin, ErrorsMixin):
-    data: RoomInitResponceData
+class RoomInitResponse(JsonTypeStrMixin, SystemMessagesMixin, ErrorsMixin):
+    data: RoomInitResponseData

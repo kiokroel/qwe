@@ -1,11 +1,12 @@
 import asyncio
 import json
 
-from core.entities.AbstractGameRoom import AbstractGameRoom
-from core.entities.AbstractPlayerSession import AbstractPlayerSession
+from core.entities.GameRoom import AbstractGameRoom
+from core.entities.PlayerSession.AbstractPlayerSession import AbstractPlayerSession
 from core.factories import AbstractPlayerSessionFactory
 from core.handlers.MessageHandler import MessageHandler
 from core.schemas.RoomInitRequest import RoomInitRequest
+from core.schemas.RoomInitResponse import RoomInitResponse
 from core.services.RoomService import RoomService
 
 
@@ -34,13 +35,17 @@ class RoomInitRequestHandler(MessageHandler):
             room: AbstractGameRoom = self.__room_service.get_room(room_name)
             room.add_player(player)
             room_init_status = "successfully created"
-        responce_message = {
-            "jsonType": "roomInitResponce",
+
+        response_message = {
+            "jsonType": "roomInitResponse",
             "data": {
                 "gameType": game_type,
                 "roomName": room_name,
                 "roomInitStatus": room_init_status,
             },
         }
+
+        response_message = RoomInitResponse.model_validate(response_message)
+
         loop = asyncio.get_event_loop()
-        loop.create_task(player.send_message(json.dumps(responce_message)))
+        loop.create_task(player.send_message(json.dumps(response_message.model_dump(by_alias=True))))

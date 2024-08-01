@@ -6,7 +6,7 @@ import json
 client = TestClient(app)
 
 
-def test_connection_to_room_positive():
+def test_player_can_connect_to_room():
     game_type = "gameWithFriend"
     room_name = "test_connection_to_room_positive"
     player_name_2 = "player_2"
@@ -48,7 +48,7 @@ def test_connection_to_room_positive():
 
     room_connection_status = "successfully_connected"
     responce_message_connect = {
-        "jsonType": "roomConnectionResponce",
+        "jsonType": "roomConnectionResponse",
         "data": {
             "gameType": game_type,
             "room": {
@@ -56,8 +56,8 @@ def test_connection_to_room_positive():
             },
             "roomConnectionStatus": room_connection_status,
             "players": {
-                "roomCreator": {"name": player_name, "side": side, },
-                "connectedPlayer": {"name": player_name_2, "side": side_2, },
+                "roomCreator": {"playerName": player_name, "playerSide": side, },
+                "connectedPlayer": {"playerName": player_name_2, "playerSide": side_2, },
             }
         },
     }
@@ -77,7 +77,7 @@ def test_connection_to_room_positive():
     assert actual_responce_message["data"] == responce_message_connect["data"]
 
 
-def test_connection_to_room_negative():
+def test_player_cant_connect_to_not_existed_room():
     game_type = "gameWithFriend"
     room_name = "test_connection_to_room_negative"
     player_name = "player_2"
@@ -101,7 +101,7 @@ def test_connection_to_room_negative():
 
     connection_status = "does not exists"
     responce_message_connect = {
-        "jsonType": "roomConnectionResponce",
+        "jsonType": "roomConnectionResponse",
         "data": {
             "gameType": game_type,
             "room": {

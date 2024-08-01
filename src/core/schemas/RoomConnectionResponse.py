@@ -8,15 +8,16 @@ from core.schemas.mixins.SystemMessageMixin import SystemMessagesMixin
 
 
 class Players(BaseModel):
-    players: dict[str, Player] = None
+    room_creator: Player | None = Field(alias="roomCreator", default=None)
+    connected_player: Player | None = Field(alias="connectedPlayer", default=None)
 
 
-class RoomConnectionResponceData(BaseModel):
+class RoomConnectionResponseData(BaseModel):
     game_type: str = Field(alias="gameType")
     room: Room
     room_connection_status: str = Field(alias="roomConnectionStatus")
     players: Players
 
 
-class RoomConnectionResponce(JsonTypeStrMixin, SystemMessagesMixin, ErrorsMixin):
-    data: RoomConnectionResponceData
+class RoomConnectionResponse(JsonTypeStrMixin, SystemMessagesMixin, ErrorsMixin):
+    data: RoomConnectionResponseData
